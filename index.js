@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const genres = require('./routes/genres');
+const customers = require('./routes/customers');
+
 const app = express();
 
 app.use(express.json());
@@ -24,6 +26,7 @@ app.get('/', (req, res) => {
 
 // API ROUTES
 app.use('/api/genres', genres);
+app.use('/api/customers', customers);
 
 // SETTING THE PORT
 const port = process.env.PORT || 3000;
