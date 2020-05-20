@@ -1,0 +1,19 @@
+{
+  "name": "api-challenge",
+  "version": "1.0.0",
+  "description": "A set of custom API challenges completed as part of my diploma in Semester 1 2020.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "author": "Aser",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
