@@ -1,6 +1,5 @@
 const Joi = require('@hapi/joi');
 const mongoose = require('mongoose');
-Joi.objectId = require('joi-objectid')(Joi);
 
 // RENTAL MODEL & SCHEMA
 const Rental = mongoose.model(

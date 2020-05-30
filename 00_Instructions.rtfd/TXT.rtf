@@ -5,13 +5,13 @@
 \paperw11900\paperh16840\margl1440\margr1440\vieww17580\viewh19580\viewkind0
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f0\b\fs24 \cf0 Validating our object ID\
+\f0\b\fs24 \cf0 Validating all our object ID\
 
-\f1\b0 Remember we should never trust the client. At the moment our retails API requires the client to POST two _id to rent a movie.\
-One _id is for the movie the other for the customer\
-If an invalid _id is sent this will crash our app at the moment and cause it to hang.\
-\
+\f1\b0 We actually have a few other \'93ObjectId\'94 we should validate. Let\'92s fix this.\
+At the moment our JOI-ObjectId validation is only happening for the rentals validation\
 
-\f0\b Fixing our rentals API so that it Validates our object IDs\
+\f0\b Fix all objectId validation\
 
-\f1\b0 1. Open>models>rental.js}
+\f1\b0 1. We want to move the JOI-ObjectId validation from models>rental.js to index.js\
+2. This way it can be accessed everywhere \
+3. Open  models>rental.js }
