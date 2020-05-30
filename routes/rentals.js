@@ -1,9 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const Fawn = require('fawn');
 const { Rental, validateRental } = require('../models/rentalModel');
 const { Movie } = require('../models/movieModel');
 const { Customer } = require('../models/customerModel');
 const router = express.Router();
+
+Fawn.init(mongoose);
 
 // GET RENTALS
 router.get('/', async (req, res) => {
@@ -46,10 +49,15 @@ router.post('/', async (req, res) => {
       dailyRentalRate: movie.dailyRentalRate,
     },
   });
-  rental = await rental.save();
-  movie.numberInStock--;
-  movie.save();
-  res.send(rental);
+  try {
+    new Fawn.Task()
+      .save('rentals', rental)
+      .update('movies', { _id: movie._id }, { $inc: { numberInStock: -1 } })
+      .run();
+    res.send(rental);
+  } catch (ex) {
+    res.status(500).send('Something Failed!');
+  }
 });
 
 module.exports = router;
