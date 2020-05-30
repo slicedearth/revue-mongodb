@@ -7,6 +7,7 @@ const genres = require('./routes/genres');
 const movies = require('./routes/movies');
 const customers = require('./routes/customers');
 const rentals = require('./routes/rentals');
+const users = require('./routes/users');
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.use(express.json());
 
 // MONGOOSE CONNECTION
 mongoose
-  .connect(`${process.env.MONGO_ADDRESS}/stream`, {
+  .connect(`${process.env.MONGO_ADDRESS}/vidly`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -33,6 +34,7 @@ app.use('/api/genres', genres);
 app.use('/api/movies', movies);
 app.use('/api/customers', customers);
 app.use('/api/rentals', rentals);
+app.use('/api/users', users);
 
 // SETTING THE PORT
 const port = process.env.PORT || 3000;
