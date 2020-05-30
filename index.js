@@ -1,4 +1,5 @@
 require('dotenv').config();
+const configs = require('config');
 const express = require('express');
 const mongoose = require('mongoose');
 const Joi = require('@hapi/joi');
@@ -12,7 +13,11 @@ const auth = require('./routes/auth');
 
 const app = express();
 
-app.use(express.json());
+// CHECK IF ENVIRONMENTAL VARIABLE HAS BEEN SET
+if (!configs.get('jwtPrivateKey')) {
+  console.error('FATAL ERROR: jwtPrivateKey is not defined!');
+  process.exit(1);
+}
 
 // MONGOOSE CONNECTION
 mongoose
@@ -30,6 +35,7 @@ app.get('/', (req, res) => {
   res.send('Welcome To Stream!');
 });
 
+app.use(express.json());
 // API ROUTES
 app.use('/api/genres', genres);
 app.use('/api/movies', movies);
