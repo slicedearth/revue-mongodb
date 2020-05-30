@@ -1,28 +1,13 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf400
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
 {\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
 {\*\expandedcolortbl;;}
 \paperw11900\paperh16840\margl1440\margr1440\vieww17580\viewh11480\viewkind0
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f0\b\fs24 \cf0 Environment Variables \
+\f0\b\fs24 \cf0 Sending back a web token when the user registers.\
 
-\f1\b0 1. At the moment we are storing our Private Key in our auth.js code. This is not a great idea if someone gets their hands on our code they know our private key.\
-2. Instead we should store them in environment variables. \
-3. We will move the Private Key to a config module and then store it in a Environmental Variable\
-\
-
-\f0\b Config
-\f1\b0 \
-4. Install: npm i config\
-5. Create a new folder: root>config\
-6. Create a new file: root>config>default.js\
-7. Open root>config>default.js\
-8. Add the JSON to your default.json file\
-9. Create a new file: root>custom-environment-variables.json\
-10. Open the file and add the following code to your file: root>custom-environment-variables.json\
-\
-
-\f0\b Add the environment variable to auth.js\
-
-\f1\b0 11. Open routes>auth.js}
+\f1\b0 1. When the user registers lets generate a web token so they can be immediately logged in as soon as they register.\
+2. Open routes>users.js
+\f0\b \
+}
