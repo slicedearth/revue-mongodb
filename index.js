@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const genres = require('./routes/genres');
 const movies = require('./routes/movies');
 const customers = require('./routes/customers');
+const rentals = require('./routes/rentals');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 app.use('/api/genres', genres);
 app.use('/api/movies', movies);
 app.use('/api/customers', customers);
+app.use('/api/rentals', rentals);
 
 // SETTING THE PORT
 const port = process.env.PORT || 3000;
