@@ -1,17 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authMiddleware = require('../middleware/authMiddleware');
+const adminMiddleware = require('../middleware/adminMiddleware');
 const { Customer, validateCustomer } = require('../models/customerModel');
 const router = express.Router();
 
 // GET CUSTOMERS
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
   const customers = await Customer.find().sort('name');
   res.send(customers);
 });
 
 // GET CUSTOMER BY ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', authMiddleware, async (req, res) => {
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     const customer = await Customer.findById(req.params.id);
 
@@ -58,7 +59,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
 });
 
 // DELETE CUSTOMER
-router.delete('/:id', authMiddleware, async (req, res) => {
+router.delete('/:id', [authMiddleware, adminMiddleware], async (req, res) => {
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     const customer = await Customer.findByIdAndRemove(req.params.id);
 
