@@ -6,17 +6,17 @@ const { Genre, validateGenre } = require('../models/genreModel');
 const router = express.Router();
 
 // GET GENRES
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const genres = await Genre.find().sort('name');
     res.send(genres);
   } catch (ex) {
-    res.status(500).send('Something Failed');
+    next(ex);
   }
 });
 
 // GET GENRE BY ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
   try {
     if (mongoose.Types.ObjectId.isValid(req.params.id)) {
       const genre = await Genre.findById(req.params.id);
@@ -26,12 +26,12 @@ router.get('/:id', async (req, res) => {
       return res.status(404).send('Invalid ID Format');
     }
   } catch (ex) {
-    res.status(500).send('Something Failed');
+    next(ex);
   }
 });
 
 // POST GENRE
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, async (req, res, next) => {
   try {
     const { error } = validateGenre(req.body);
     if (error) {
@@ -42,12 +42,12 @@ router.post('/', authMiddleware, async (req, res) => {
 
     res.send(genre);
   } catch (ex) {
-    res.status(500).send('Something Failed');
+    next(ex);
   }
 });
 
 // UPDATE GENRE
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, async (req, res, next) => {
   try {
     const { error } = validateGenre(req.body);
     if (error) {
@@ -65,27 +65,31 @@ router.put('/:id', authMiddleware, async (req, res) => {
 
     res.send(genre);
   } catch (ex) {
-    res.status(500).send('Something Failed');
+    next(ex);
   }
 });
 
 // DELETE GENRE
-router.delete('/:id', [authMiddleware, adminMiddleware], async (req, res) => {
-  try {
-    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-      const genre = await Genre.findByIdAndRemove(req.params.id);
+router.delete(
+  '/:id',
+  [authMiddleware, adminMiddleware],
+  async (req, res, next) => {
+    try {
+      if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+        const genre = await Genre.findByIdAndRemove(req.params.id);
 
-      if (!genre) {
-        return res.status(404).send('Invalid Genre ID');
+        if (!genre) {
+          return res.status(404).send('Invalid Genre ID');
+        }
+
+        res.send(genre);
+      } else {
+        return res.status(404).send('Invalid ID Format');
       }
-
-      res.send(genre);
-    } else {
-      return res.status(404).send('Invalid ID Format');
+    } catch (ex) {
+      next(ex);
     }
-  } catch (ex) {
-    res.status(500).send('Something Failed');
   }
-});
+);
 
 module.exports = router;
