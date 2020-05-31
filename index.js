@@ -24,6 +24,8 @@ mongoose
   .connect(`${process.env.MONGO_ADDRESS}/vidly`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
   })
   .then(() => {
     console.log('connected');

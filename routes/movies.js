@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const authMiddleware = require('../middleware/authMiddleware');
 const { Movie, validateMovie } = require('../models/movieModel');
 const { Genre } = require('../models/genreModel');
 const router = express.Router();
@@ -22,7 +23,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST MOVIE
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   const { error } = validateMovie(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -43,7 +44,7 @@ router.post('/', async (req, res) => {
 });
 
 // UPDATE MOVIE
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, async (req, res) => {
   const { error } = validateMovie(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -68,7 +69,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE MOVIE
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res) => {
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     const movie = await Movie.findByIdAndRemove(req.params.id);
     if (!movie) return res.status(404).send('Invalid Movie ID');

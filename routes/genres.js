@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const authMiddleware = require('../middleware/authMiddleware');
 const { Genre, validateGenre } = require('../models/genreModel');
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST GENRE
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   const { error } = validateGenre(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -33,7 +34,7 @@ router.post('/', async (req, res) => {
 });
 
 // UPDATE GENRE
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, async (req, res) => {
   const { error } = validateGenre(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -52,7 +53,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE GENRE
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res) => {
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     const genre = await Genre.findByIdAndRemove(req.params.id);
 

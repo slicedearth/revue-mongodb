@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Fawn = require('fawn');
+const authMiddleware = require('../middleware/authMiddleware');
 const { Rental, validateRental } = require('../models/rentalModel');
 const { Movie } = require('../models/movieModel');
 const { Customer } = require('../models/customerModel');
@@ -9,12 +10,12 @@ const router = express.Router();
 Fawn.init(mongoose);
 
 // GET RENTALS
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
   const rentals = await Rental.find().sort('-dateOut');
   res.send(rentals);
 });
 // GET RENTAL BY ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', authMiddleware, async (req, res) => {
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     const rental = await Rental.findById(req.params.id);
     if (!rental) return res.status(404).send('Invalid Rental ID');
@@ -24,7 +25,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 // POST RENTAL
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   const { error } = validateRental(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
