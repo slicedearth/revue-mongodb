@@ -1,6 +1,7 @@
 const winston = require('winston');
 require('winston-mongodb');
 
+// LOGGER
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
@@ -26,8 +27,26 @@ const logger = winston.createLogger({
   ],
 });
 
+// ERRORS
 errorMiddleware = (err, req, res, next) => {
   logger.error(err.message, err);
-  res.status(500).send('Something Failed');
+  res.status(500).send('Something failed...');
 };
+
+// UNCAUGHT EXCEPTIONS
+process.on('uncaughtException', (ex) => {
+  console.log('An uncaught exception occured...');
+  logger.error(ex.message, ex);
+});
+// throw new Error('Something failed during startup.');
+
+// UNHANDLED REJECTIONS
+process.on('unhandledRejection', (rej) => {
+  console.log('An unhandled rejection occurred...');
+  logger.error(rej.message, rej);
+});
+
+// const p = Promise.reject(new Error('The promise was rejected!'));
+// p.then(() => console.log('Done'));
+
 module.exports = errorMiddleware;
