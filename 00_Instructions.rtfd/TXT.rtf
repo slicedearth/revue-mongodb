@@ -1,61 +1,74 @@
 {\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;\f2\fnil\fcharset0 Menlo-Regular;
-}
-{\colortbl;\red255\green255\blue255;\red202\green202\blue202;\red23\green23\blue23;\red183\green111\blue179;
-\red70\green137\blue204;\red140\green211\blue254;\red212\green214\blue154;\red194\green126\blue101;\red167\green197\blue152;
-\red89\green138\blue67;}
-{\*\expandedcolortbl;;\cssrgb\c83137\c83137\c83137;\cssrgb\c11765\c11765\c11765;\cssrgb\c77255\c52549\c75294;
-\cssrgb\c33725\c61176\c83922;\cssrgb\c61176\c86275\c99608;\cssrgb\c86275\c86275\c66667;\cssrgb\c80784\c56863\c47059;\cssrgb\c70980\c80784\c65882;
-\cssrgb\c41569\c60000\c33333;}
+{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fnil\fcharset0 Menlo-Regular;\f2\fswiss\fcharset0 Helvetica;
+\f3\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red212\green214\blue154;\red23\green23\blue23;\red0\green0\blue233;
+\red89\green138\blue67;\red202\green202\blue202;\red140\green211\blue254;\red194\green126\blue101;\red70\green137\blue204;
+\red183\green111\blue179;}
+{\*\expandedcolortbl;;\cssrgb\c86275\c86275\c66667;\cssrgb\c11765\c11765\c11765;\cssrgb\c0\c0\c93333;
+\cssrgb\c41569\c60000\c33333;\cssrgb\c83137\c83137\c83137;\cssrgb\c61176\c86275\c99608;\cssrgb\c80784\c56863\c47059;\cssrgb\c33725\c61176\c83922;
+\cssrgb\c77255\c52549\c75294;}
 \paperw11900\paperh16840\margl1440\margr1440\vieww17580\viewh11480\viewkind0
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f0\b\fs24 \cf0 Error Middleware\
+\f0\b\fs24 \cf0 Removing 
+\f1\b0 \cf2 \cb3 \expnd0\expndtw0\kerning0
+asyncMiddleware
+\f0\b \cf0 \cb1 \kerning1\expnd0\expndtw0 \
 
-\f1\b0 1. We want to keep our code as clean as possible\
-\pard\pardeftab720\sl360\partightenfactor0
-
-\f2 \cf2 \cb3 \expnd0\expndtw0\kerning0
-  \cf4 try\cf2 \{\cb1 \
-\cb3     \cf5 const\cf2  \cf6 genres\cf2  = \cf4 await\cf2  \cf6 Genre\cf2 .\cf7 find\cf2 ().\cf7 sort\cf2 (\cf8 'name'\cf2 );\cb1 \
-\cb3     \cf6 res\cf2 .\cf7 send\cf2 (\cf6 genres\cf2 );\cb1 \
-\cb3   \} \cf4 catch\cf2  (\cf6 ex\cf2 )\{\cb1 \
-\cb3     \cf6 res\cf2 .\cf7 status\cf2 (\cf9 500\cf2 ).\cf7 send\cf2 (\cf8 'Something failed.'\cf2 );\cb1 \
-\cb3   \}\cb1 \
+\f2\b0 1. So now we can use 
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+asyncMiddleware 
+\f2 \cf0 \cb1 \kerning1\expnd0\expndtw0 on all our routes to wrap them in a try catch \
+2. But that still means that we have to add 
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+asyncMiddleware
+\f2 \cf0 \cb1 \kerning1\expnd0\expndtw0  to every route\
+3. Now as you can imagine this is a common task so someone has made a module to make this easy.\
+4. This module automatically wraps all routes in  something like 
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+asyncMiddleware
+\f2 \cf0 \cb1 \kerning1\expnd0\expndtw0  at run time.\
+5. The module is called: express-async-errors\
+\pard\pardeftab720\sl280\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://www.npmjs.com/package/express-async-errors"}}{\fldrslt 
+\f3 \cf4 \expnd0\expndtw0\kerning0
+\ul \ulc4 https://www.npmjs.com/package/express-async-errors}}
+\f3 \cf4 \expnd0\expndtw0\kerning0
+\ul \ulc4 \
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f1 \cf0 \kerning1\expnd0\expndtw0 2. But as you can see the try catch block is a bit messy\
-3. It can be a bit distracting when we are reading our code\
-4. It also means that we will need to add try catch to every route.\
-\
-
-\f0\b Moving try catch into middleware\
-
-\f1\b0 5. We could make some middleware to hold this try catch\
-6. But before we do that lets take a look at how we could do this without middleware to keep it simple.\
-\
+\f2 \cf0 \kerning1\expnd0\expndtw0 \ulnone 6. The module will wrap our code in something like 
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+asyncMiddleware
+\f2 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf0 \
 \pard\pardeftab720\sl360\partightenfactor0
 
-\f2 \cf5 \cb3 \expnd0\expndtw0\kerning0
-function\cf2  \cf7 asyncMiddleware\cf2 (\cf6 handler\cf2 )\{\cb1 \
-\cb3   \cf4 return\cf2  \cf5 async\cf2  (\cf6 req\cf2 , \cf6 res\cf2 , \cf6 next\cf2 )\cf5 =>\cf2  \{\cb1 \
-\cb3     \cf4 try\cf2 \{\cb1 \
-\cb3       \cf4 await\cf2  \cf7 handler\cf2 (\cf6 req\cf2 , \cf6 res\cf2 );\cb1 \
-\cb3     \} \cf4 catch\cf2  (\cf6 ex\cf2 )\{\cb1 \
-\cb3       \cf7 next\cf2 (\cf6 ex\cf2 );\cb1 \
-\cb3     \}\cb1 \
-\cb3   \}\cb1 \
-\cb3 \}\cb1 \
-\
+\f1 \cf5 \cb3 \expnd0\expndtw0\kerning0
+//Genres GET Route\cf6 \cb1 \
 \pard\pardeftab720\sl360\partightenfactor0
-\cf10 \cb3 //Genres GET Route\cf2 \cb1 \
-\pard\pardeftab720\sl360\partightenfactor0
-\cf6 \cb3 router\cf2 .\cf7 get\cf2 (\cf8 '/'\cf2 , \cf7 asyncMiddleware\cf2 (\cf5 async\cf2 (\cf6 req\cf2 , \cf6 res\cf2 , \cf6 next\cf2 ) \cf5 =>\cf2  \{\cb1 \
-\cb3     \cf5 const\cf2  \cf6 genres\cf2  = \cf4 await\cf2  \cf6 Genre\cf2 .\cf7 find\cf2 ().\cf7 sort\cf2 (\cf8 'name'\cf2 );\cb1 \
-\cb3     \cf6 res\cf2 .\cf7 send\cf2 (\cf6 genres\cf2 );\cb1 \
+\cf7 \cb3 router\cf6 .\cf2 get\cf6 (\cf8 '/'\cf6 , \cf2 asyncMiddleware\cf6 (\cf9 async\cf6 (\cf7 req\cf6 , \cf7 res\cf6 , \cf7 next\cf6 ) \cf9 =>\cf6  \{\cb1 \
+\cb3     \cf9 const\cf6  \cf7 genres\cf6  = \cf10 await\cf6  \cf7 Genre\cf6 .\cf2 find\cf6 ().\cf2 sort\cf6 (\cf8 'name'\cf6 );\cb1 \
+\cb3     \cf7 res\cf6 .\cf2 send\cf6 (\cf7 genres\cf6 );\cb1 \
 \cb3 \}));\cb1 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf6 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f2 \cf0 \kerning1\expnd0\expndtw0 7. It then passes the error to the our middleware error function.\
+8. This means we no longer need our 
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+asyncMiddleware
+\f2 \cf0 \cb1 \kerning1\expnd0\expndtw0  middleware of the function to call for  
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+asyncMiddleware
+\f2 \cf0 \cb1 \kerning1\expnd0\expndtw0  \
+9. Install express-async-errors: npm i express-async-errors\
+10. Open routes>genres.js\
 \
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f1 \cf0 \kerning1\expnd0\expndtw0 7. Create a new file middleware>async.js\
-8. Create a new file middleware>async.js}
+\f0\b \cf0 Note
+\f2\b0 \
+If express-async-errors does not work for you or your application you will simply need to do it manually or put try catch on all your routes.}

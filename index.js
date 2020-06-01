@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('express-async-errors');
 const configs = require('config');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -33,12 +34,12 @@ mongoose
   })
   .catch((err) => console.error('connection failed', err));
 
+// MIDDLEWARE
+app.use(express.json());
 // HOME ROUTE
 app.get('/', (req, res) => {
   res.send('Welcome To Stream!');
 });
-
-app.use(express.json());
 // API ROUTES
 app.use('/api/genres', genres);
 app.use('/api/movies', movies);
@@ -46,7 +47,7 @@ app.use('/api/customers', customers);
 app.use('/api/rentals', rentals);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
-
+// ERROR MIDDLEWARE
 app.use(errorMiddleware);
 
 // SETTING THE PORT
