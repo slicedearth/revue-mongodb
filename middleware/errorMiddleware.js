@@ -1,4 +1,5 @@
 const winston = require('winston');
+require('winston-mongodb');
 
 const logger = winston.createLogger({
   level: 'info',
@@ -15,6 +16,12 @@ const logger = winston.createLogger({
     }),
     new winston.transports.File({
       filename: 'logs/combined.log',
+    }),
+    new winston.transports.MongoDB({
+      db: `${process.env.MONGO_ADDRESS}/vidly`,
+      options: {
+        useUnifiedTopology: true,
+      },
     }),
   ],
 });
