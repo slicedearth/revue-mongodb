@@ -7,9 +7,9 @@ const Joi = require('@hapi/joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const errorMiddleware = require('./middleware/errorMiddleware');
 const genres = require('./routes/genres');
-const movies = require('./routes/movies');
-const customers = require('./routes/customers');
-const rentals = require('./routes/rentals');
+const albums = require('./routes/albums');
+const artists = require('./routes/artists');
+const reviews = require('./routes/reviews');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 
@@ -23,7 +23,7 @@ if (!configs.get('jwtPrivateKey')) {
 
 // MONGOOSE CONNECTION
 mongoose
-  .connect(`${process.env.MONGO_ADDRESS}/vidly`, {
+  .connect(`${process.env.MONGO_ADDRESS}/revue`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -42,9 +42,9 @@ app.get('/', (req, res) => {
 });
 // API ROUTES
 app.use('/api/genres', genres);
-app.use('/api/movies', movies);
-app.use('/api/customers', customers);
-app.use('/api/rentals', rentals);
+app.use('/api/albums', albums);
+app.use('/api/artists', artists);
+app.use('/api/reviews', reviews);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 // ERROR MIDDLEWARE
