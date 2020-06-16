@@ -8,7 +8,7 @@ const router = express.Router();
 
 // GET REVIEWS
 router.get('/', async (req, res) => {
-  const reviews = await Review.find().sort('title');
+  const reviews = await Review.find().populate('album').sort('title');
   res.send(reviews);
 });
 
@@ -33,12 +33,13 @@ router.post('/', authMiddleware, async (req, res) => {
 
   let review = new Review({
     title: req.body.title,
-    album: {
-      _id: album._id,
-      title: album.title,
-      artist: album.artist,
-      genre: album.genre,
-    },
+    album: req.body.albumId,
+    // album: {
+    //   _id: album._id,
+    //   title: album.title,
+    //   artist: album.artist,
+    //   genre: album.genre,
+    // },
     rating: req.body.rating,
     reviewText: req.body.reviewText,
   });
@@ -58,12 +59,14 @@ router.put('/:id', authMiddleware, async (req, res) => {
     req.params.id,
     {
       title: req.body.title,
-      album: {
-        _id: album._id,
-        title: album.title,
-        artist: album.artist,
-        genre: album.genre,
-      },
+      album: req.body.albumId,
+
+      // album: {
+      //   _id: album._id,
+      //   title: album.title,
+      //   artist: album.artist,
+      //   genre: album.genre,
+      // },
       rating: req.body.rating,
       reviewText: req.body.reviewText,
     },

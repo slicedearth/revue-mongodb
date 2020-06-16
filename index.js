@@ -3,6 +3,7 @@ require('express-async-errors');
 const configs = require('config');
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const Joi = require('@hapi/joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const errorMiddleware = require('./middleware/errorMiddleware');
@@ -36,6 +37,7 @@ mongoose
 
 // MIDDLEWARE
 app.use(express.json());
+app.use(cors());
 // HOME ROUTE
 app.get('/', (req, res) => {
   res.send('Welcome To Stream!');

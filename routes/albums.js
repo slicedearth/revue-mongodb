@@ -9,7 +9,7 @@ const router = express.Router();
 
 // GET ALBUMS
 router.get('/', async (req, res) => {
-  const albums = await Album.find().sort('title');
+  const albums = await Album.find().populate('artist genre').sort('title');
   res.send(albums);
 });
 
@@ -36,14 +36,16 @@ router.post('/', authMiddleware, async (req, res) => {
 
   let album = new Album({
     title: req.body.title,
-    genre: {
-      _id: genre._id,
-      name: genre.name,
-    },
-    artist: {
-      _id: artist.id,
-      name: artist.name,
-    },
+    genre: req.body.genreId,
+    artist: req.body.artistId,
+    // genre: {
+    //   _id: genre._id,
+    //   name: genre.name,
+    // },
+    // artist: {
+    //   _id: artist.id,
+    //   name: artist.name,
+    // },
   });
   album = await album.save();
   res.send(album);
@@ -63,14 +65,8 @@ router.put('/:id', authMiddleware, async (req, res) => {
     req.params.id,
     {
       title: req.body.title,
-      genre: {
-        _id: genre._id,
-        name: genre.name,
-      },
-      artist: {
-        _id: artist.id,
-        name: artist.name,
-      },
+      genre: req.body.genreId,
+      artist: req.body.artistId,
     },
     { new: true }
   );

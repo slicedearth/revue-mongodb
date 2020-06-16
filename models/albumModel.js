@@ -12,12 +12,12 @@ const albumSchema = new mongoose.Schema({
     maxlength: 255,
   },
   genre: {
-    type: genreSchema,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Genre',
   },
   artist: {
-    type: artistSchema,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Artist',
   },
 });
 

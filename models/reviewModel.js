@@ -11,8 +11,8 @@ const reviewSchema = new mongoose.Schema({
     maxlength: 255,
   },
   album: {
-    type: albumSchema,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Albums',
   },
   rating: {
     type: Number,
