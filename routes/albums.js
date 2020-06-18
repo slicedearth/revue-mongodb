@@ -9,14 +9,19 @@ const router = express.Router();
 
 // GET ALBUMS
 router.get('/', async (req, res) => {
-  const albums = await Album.find().populate('artist genre').sort('title');
+  const albums = await Album.find()
+    .populate('artist')
+    .populate('genre')
+    .sort('title');
   res.send(albums);
 });
 
 // GET ALBUM BY ID
 router.get('/:id', async (req, res) => {
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-    const album = await Album.findById(req.params.id);
+    const album = await Album.findById(req.params.id)
+      .populate('artist')
+      .populate('genre');
     if (!album) return res.status(404).send('Invalid Album ID');
     res.send(album);
   } else {
@@ -38,14 +43,7 @@ router.post('/', authMiddleware, async (req, res) => {
     title: req.body.title,
     genre: req.body.genreId,
     artist: req.body.artistId,
-    // genre: {
-    //   _id: genre._id,
-    //   name: genre.name,
-    // },
-    // artist: {
-    //   _id: artist.id,
-    //   name: artist.name,
-    // },
+    year: req.body.year,
   });
   album = await album.save();
   res.send(album);
@@ -67,6 +65,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
       title: req.body.title,
       genre: req.body.genreId,
       artist: req.body.artistId,
+      year: req.body.year,
     },
     { new: true }
   );

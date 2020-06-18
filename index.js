@@ -22,7 +22,7 @@ if (!configs.get('jwtPrivateKey')) {
   process.exit(1);
 }
 
-// MONGOOSE CONNECTION
+// MONGOOSE CONNECTION -- CHANGE MONGO_ADDRESS VARIABLE TO APPROPRIATE CONNECTION STRING
 mongoose
   .connect(`${process.env.MONGO_ADDRESS}/revue`, {
     useNewUrlParser: true,
@@ -31,9 +31,9 @@ mongoose
     useFindAndModify: false,
   })
   .then(() => {
-    console.log('connected');
+    console.log('Connected to database');
   })
-  .catch((err) => console.error('connection failed', err));
+  .catch((err) => console.error('Failed to connect to database. ERROR: ', err));
 
 // MIDDLEWARE
 app.use(express.json());

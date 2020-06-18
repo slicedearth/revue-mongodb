@@ -30,4 +30,9 @@ router.get('/me', authMiddleware, async (req, res) => {
   res.send(user);
 });
 
+// GET ALL USERS
+router.get('/', [authMiddleware, adminMiddleware], async (req, res, next) => {
+  const users = await User.find().sort('name');
+  res.send(users);
+});
 module.exports = router;
