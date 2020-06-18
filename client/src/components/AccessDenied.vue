@@ -1,9 +1,21 @@
 <template>
-  <h1>Access Denied</h1>
+  <Panel title="Access Denied">
+    <img class="accessDeniedIMG" :src="require('@/assets/undraw_cancel_u1it.svg')" alt />
+  </Panel>
 </template>
 
 <script>
-export default {};
+import Panel from "@/components/layout/Panel";
+export default {
+  name: "AccessDenied",
+  components: {
+    Panel
+  }
+};
 </script>
 
-<style></style>
+<style scoped>
+.accessDeniedIMG {
+  max-width: 50vw;
+}
+</style>

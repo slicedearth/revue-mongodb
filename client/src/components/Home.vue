@@ -1,117 +1,32 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <router-link to="/reviews/create" class="nav-link mr-2">
-      Reviews
-    </router-link>
-    <p>
-      For a guide and recipes on how to configure / customize this project,
-      <br />check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
-        >
-      </li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-          >Forum</a
-        >
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-          >Community Chat</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener"
-          >Twitter</a
-        >
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
-      </li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener"
-          >vue-router</a
-        >
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-          >vue-devtools</a
-        >
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
-        >
-      </li>
-    </ul>
-  </div>
+  <Panel title="Welcome To ReVue!">
+    <img class="homeIMG" :src="require('@/assets/undraw_happy_music_g6wc.svg')" alt />
+    <p
+      class="homeText text-wrap"
+    >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et fuga labore veritatis repellat nobis sit harum aperiam, illum tempore officiis, illo, velit accusantium expedita sapiente nihil libero temporibus neque ab animi provident in inventore molestiae consectetur? Vel ullam, labore alias enim blanditiis qui adipisci voluptatem repudiandae, nesciunt sit aspernatur ratione voluptates accusantium earum, impedit quia officia necessitatibus doloribus tempora? Ullam facere explicabo libero ad? Distinctio, ex? Error reprehenderit provident vero ducimus corporis fuga non, maxime molestias soluta nemo corrupti odit repellendus, nisi, deleniti aperiam. Ipsa neque enim maxime, odio doloremque voluptates nulla at repellat. Excepturi velit assumenda ipsam accusantium eius. Doloribus repudiandae magni adipisci consectetur sint at assumenda nulla velit totam pariatur molestias, distinctio magnam non maiores officia doloremque vel beatae blanditiis sapiente natus dolorum laudantium id perspiciatis? Iure quam neque voluptate fugit eveniet accusantium totam reprehenderit tenetur. Modi magni placeat magnam, possimus dolores in neque eaque sunt fugiat eum? Earum, dolore consectetur sapiente officia inventore laboriosam architecto ab vel aut voluptates, aperiam aliquam fuga qui? Eos repellat suscipit nostrum eius modi, a sit reiciendis ad mollitia dolore possimus exercitationem labore dolor voluptates, accusantium placeat blanditiis quo sunt maiores, aut iusto. Commodi neque ab rerum, voluptates, quidem, laudantium soluta harum earum tempora consequatur accusantium! Aut excepturi aliquid eveniet asperiores perspiciatis praesentium et corporis eaque, quae nobis, porro recusandae dolor deleniti dolorem odit laborum quibusdam reiciendis ipsum, vel obcaecati! Id hic quis animi consectetur illo placeat eius consequatur sit facilis ad illum accusantium est dolorem vel, ratione ex dolores repellat quas eos commodi minus, voluptatem officia cumque. Consectetur nulla dicta sed ipsam, earum dolor dolore totam officia reprehenderit voluptate officiis commodi eveniet ea, quis repellat amet distinctio similique enim! Dolores dicta aspernatur cum aliquam accusantium itaque error! Cupiditate odit rerum error aspernatur nobis beatae iure voluptate voluptatem debitis magnam ex magni, sed odio facere soluta veritatis dolorum, quasi modi saepe necessitatibus labore, sunt nesciunt laudantium distinctio! Sunt, optio, corrupti deserunt magnam totam nihil reprehenderit id assumenda, veritatis ipsam ipsum eos dignissimos sapiente quo! Quis fugit repellat, asperiores, modi vel minus, quisquam perferendis rerum soluta accusamus sapiente tempore laboriosam adipisci dolores magnam!</p>
+  </Panel>
 </template>
 
 <script>
+import Panel from "@/components/layout/Panel";
 export default {
-  name: 'Home',
-  props: {
-    msg: String,
-  },
+  name: "Home",
+  components: {
+    Panel
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.homeHead {
+  padding: 1rem;
+  margin: 0px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.homeText {
+  padding: 2rem;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.homeIMG {
+  max-width: 50vw;
 }
 </style>
