@@ -14,6 +14,12 @@ export default {
       headers: { 'x-auth-token': token },
     });
   },
+  getReviewDataById(reviewId, token) {
+    return Api().get(`api/reviews/data/${reviewId}`, {
+      headers: { 'x-auth-token': token },
+    });
+  },
+
   putReviewById(reviewId, reviews, token) {
     return Api().put(`api/reviews/${reviewId}`, reviews, {
       headers: { 'x-auth-token': token },
