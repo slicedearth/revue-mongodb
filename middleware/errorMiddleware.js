@@ -5,7 +5,7 @@ require('winston-mongodb');
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
-  defaultMeta: { service: 'vidly-service' },
+  defaultMeta: { service: 'ReVue Service' },
   transports: [
     new winston.transports.File({
       filename: 'logs/error.log',
@@ -18,8 +18,9 @@ const logger = winston.createLogger({
     new winston.transports.File({
       filename: 'logs/combined.log',
     }),
+    // WINSTON MONGODB CONNECTION -- CHANGE MONGO_ADDRESS VARIABLE TO APPROPRIATE CONNECTION STRING
     new winston.transports.MongoDB({
-      db: `${process.env.MONGO_ADDRESS}/vidly`,
+      db: `${process.env.MONGO_ADDRESS}/revue`,
       options: {
         useUnifiedTopology: true,
       },
@@ -35,7 +36,7 @@ errorMiddleware = (err, req, res, next) => {
 
 // UNCAUGHT EXCEPTIONS
 process.on('uncaughtException', (ex) => {
-  console.log('An uncaught exception occured...');
+  console.log('An uncaught exception occurred...');
   logger.error(ex.message, ex);
 });
 // throw new Error('Something failed during startup.');

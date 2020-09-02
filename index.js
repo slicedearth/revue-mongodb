@@ -3,13 +3,14 @@ require('express-async-errors');
 const configs = require('config');
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const Joi = require('@hapi/joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const errorMiddleware = require('./middleware/errorMiddleware');
 const genres = require('./routes/genres');
-const movies = require('./routes/movies');
-const customers = require('./routes/customers');
-const rentals = require('./routes/rentals');
+const albums = require('./routes/albums');
+const artists = require('./routes/artists');
+const reviews = require('./routes/reviews');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 
@@ -21,30 +22,31 @@ if (!configs.get('jwtPrivateKey')) {
   process.exit(1);
 }
 
-// MONGOOSE CONNECTION
+// MONGOOSE CONNECTION -- CHANGE MONGO_ADDRESS VARIABLE TO APPROPRIATE CONNECTION STRING
 mongoose
-  .connect(`${process.env.MONGO_ADDRESS}/vidly`, {
+  .connect(`${process.env.MONGO_ADDRESS}/revue`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false,
   })
   .then(() => {
-    console.log('connected');
+    console.log('Connected to database');
   })
-  .catch((err) => console.error('connection failed', err));
+  .catch((err) => console.error('Failed to connect to database. ERROR: ', err));
 
 // MIDDLEWARE
 app.use(express.json());
+app.use(cors());
 // HOME ROUTE
 app.get('/', (req, res) => {
   res.send('Welcome To Stream!');
 });
 // API ROUTES
 app.use('/api/genres', genres);
-app.use('/api/movies', movies);
-app.use('/api/customers', customers);
-app.use('/api/rentals', rentals);
+app.use('/api/albums', albums);
+app.use('/api/artists', artists);
+app.use('/api/reviews', reviews);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 // ERROR MIDDLEWARE
