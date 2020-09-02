@@ -1,2 +1,3 @@
-# api-challenge
- Custom API challenges from my diploma.
+# ReVue MongoDB
+
+Music review site built with Vue, Express and MongoDB.
